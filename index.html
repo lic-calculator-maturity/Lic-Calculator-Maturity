@@ -1,7 +1,112 @@
-<html>
-  <head><title>LIC Maturity Calculator</title></head>
-  <body>
-    <h1>Welcome to LIC Maturity Calculator</h1>
-    <p>This is a basic calculator site hosted for free.</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LIC Policy Maturity Calculator</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    label { display: block; margin-top: 10px; }
+    input, select, button { padding: 8px; width: 100%; max-width: 400px; margin-top: 5px; }
+    .result { margin-top: 20px; padding: 15px; border: 1px solid #ccc; background: #f9f9f9; width: fit-content; }
+    .whatsapp-btn {
+        display: inline-block; 
+        background: #25D366; 
+        color: white; 
+        padding: 10px 15px; 
+        border-radius: 5px; 
+        text-decoration: none;
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<h2>LIC Policy Maturity Calculator</h2>
+
+<form id="maturityForm">
+    <label for="policy">Select Policy</label>
+    <select id="policy" required>
+        <option value="">-- Select Policy --</option>
+        <option value="714">714 - New Endowment</option>
+        <option value="715">715 - New Jeevan Anand</option>
+        <option value="733">733 - Jeevan Lakshya</option>
+        <option value="736">736 - Jeevan Labh</option>
+        <option value="760">760 - Bima Jyoti</option>
+        <option value="768">768 - Jeevan Azad</option>
+        <option value="911">911 - Nav Jeevan Shree</option>
+        <option value="912">912 - Nav Jeevan Shree</option>
+        <option value="751">751 - Micro Bachat</option>
+        <option value="720">720 - New Money Back - 20 Years</option>
+        <option value="721">721 - New Money Back - 25 Years</option>
+        <option value="748">748 - Bima Shree</option>
+        <option value="732">732 - New Children Money Back</option>
+        <option value="734">734 - Jeevan Tarun</option>
+        <option value="774">774 - Amrit Baal</option>
+        <option value="745">745 - Jeevan Umang</option>
+        <option value="771">771 - Jeevan Utsav</option>
+        <option value="758">758 - Jeevan Shanti</option>
+        <option value="857">857 - Jeevan Akshay VII</option>
+        <option value="879">879 - Smart Pension</option>
+        <option value="717">717 - Single Premium Endowment</option>
+        <option value="955">955 - New Jeevan Amar</option>
+        <option value="875">875 - Yuva Term</option>
+        <option value="867">867 - Pension Plus</option>
+        <option value="873">873 - Index Plus</option>
+        <option value="749">749 - Nivesh Plus</option>
+    </select>
+
+    <label for="sumAssured">Sum Assured (₹)</label>
+    <input type="number" id="sumAssured" required>
+
+    <label for="term">Policy Term (Years)</label>
+    <input type="number" id="term" required>
+
+    <label for="ppt">Premium Paying Term (Years)</label>
+    <input type="number" id="ppt" required>
+
+    <label for="premium">Annual Premium (₹)</label>
+    <input type="number" id="premium" required>
+
+    <label>
+        <input type="checkbox" id="accidental"> Add Accidental Benefit (+₹1000/year)
+    </label>
+
+    <button type="button" onclick="calculateMaturity()">Calculate</button>
+</form>
+
+<div id="results" class="result" style="display:none;">
+    <h3>Calculation Results</h3>
+    <p><strong>Total Premium Paid:</strong> ₹<span id="totalPremium"></span></p>
+    <p><strong>Estimated Maturity Value:</strong> ₹<span id="maturityValue"></span></p>
+    <p><strong>Estimated Tax Saved (80C):</strong> ₹<span id="taxSaved"></span></p>
+    <a id="whatsappShare" class="whatsapp-btn" target="_blank">Share on WhatsApp</a>
+</div>
+
+<script>
+function calculateMaturity() {
+    let premium = parseFloat(document.getElementById('premium').value);
+    let ppt = parseInt(document.getElementById('ppt').value);
+    let term = parseInt(document.getElementById('term').value);
+    let accidental = document.getElementById('accidental').checked;
+
+    if (accidental) {
+        premium += 1000; // Adding accidental benefit
+    }
+
+    let totalPremiumPaid = premium * ppt;
+    let maturityValue = totalPremiumPaid * 1.5; // Simple assumption, change formula as needed
+    let taxSaved = Math.min(premium * ppt, 150000) * 0.3; // Assuming 30% tax slab
+
+    document.getElementById('totalPremium').textContent = totalPremiumPaid.toLocaleString();
+    document.getElementById('maturityValue').textContent = maturityValue.toLocaleString();
+    document.getElementById('taxSaved').textContent = taxSaved.toLocaleString();
+
+    let message = `LIC Policy Maturity Details:\nTotal Premium Paid: ₹${totalPremiumPaid.toLocaleString()}\nMaturity Value: ₹${maturityValue.toLocaleString()}\nTax Saved: ₹${taxSaved.toLocaleString()}`;
+    document.getElementById('whatsappShare').href = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+    document.getElementById('results').style.display = 'block';
+}
+</script>
+
+</body>
 </html>
