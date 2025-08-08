@@ -4,23 +4,93 @@
 <meta charset="UTF-8">
 <title>LIC Policy Maturity Calculator</title>
 <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    label { display: block; margin-top: 10px; }
-    input, select, button { padding: 8px; width: 100%; max-width: 400px; margin-top: 5px; }
-    .result { margin-top: 20px; padding: 15px; border: 1px solid #ccc; background: #f9f9f9; width: fit-content; }
+    body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f3f6fa;
+        color: #333;
+    }
+    .container {
+        max-width: 700px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #2a4d8f;
+    }
+    label {
+        display: block;
+        margin-top: 12px;
+        font-weight: 500;
+    }
+    input, select, button {
+        padding: 10px;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+    input:focus, select:focus {
+        outline: none;
+        border-color: #2a4d8f;
+        box-shadow: 0 0 5px rgba(42, 77, 143, 0.3);
+    }
+    button {
+        background: #2a4d8f;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: background 0.3s ease;
+    }
+    button:hover {
+        background: #1c3664;
+    }
+    .result {
+        margin-top: 25px;
+        padding: 20px;
+        border: 1px solid #d1d9e6;
+        background: #f8fbff;
+        border-radius: 8px;
+    }
+    .result h3 {
+        margin-top: 0;
+        color: #2a4d8f;
+    }
     .whatsapp-btn {
-        display: inline-block; 
-        background: #25D366; 
-        color: white; 
-        padding: 10px 15px; 
-        border-radius: 5px; 
+        display: inline-block;
+        background: #25D366;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
         text-decoration: none;
+        font-weight: 500;
         margin-top: 10px;
+    }
+    .powered {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+    .powered a {
+        text-decoration: none;
+        color: #2a4d8f;
+        font-weight: bold;
     }
 </style>
 </head>
 <body>
 
+<div class="container">
 <h2>LIC Policy Maturity Calculator</h2>
 
 <form id="maturityForm">
@@ -79,14 +149,18 @@
     <p><strong>Total Premium Paid:</strong> ₹<span id="totalPremium"></span></p>
     <p><strong>Estimated Maturity Value:</strong> ₹<span id="maturityValue"></span></p>
     <p><strong>Estimated Tax Saved (80C):</strong> ₹<span id="taxSaved"></span></p>
-    <a id="whatsappShare" class="whatsapp-btn" target="_blank">Share on WhatsApp</a>
+    <a id="whatsappShare" class="whatsapp-btn" target="_blank">📲 Share on WhatsApp</a>
+</div>
+
+<div class="powered">
+    Powered by <a href="https://www.insuringgurgaon.com" target="_blank">InsuringGurgaon.com</a>
+</div>
 </div>
 
 <script>
 function calculateMaturity() {
     let premium = parseFloat(document.getElementById('premium').value);
     let ppt = parseInt(document.getElementById('ppt').value);
-    let term = parseInt(document.getElementById('term').value);
     let accidental = document.getElementById('accidental').checked;
 
     if (accidental) {
@@ -94,8 +168,8 @@ function calculateMaturity() {
     }
 
     let totalPremiumPaid = premium * ppt;
-    let maturityValue = totalPremiumPaid * 1.5; // Simple assumption, change formula as needed
-    let taxSaved = Math.min(premium * ppt, 150000) * 0.3; // Assuming 30% tax slab
+    let maturityValue = totalPremiumPaid * 1.5; // Simple assumption
+    let taxSaved = Math.min(totalPremiumPaid, 150000) * 0.3; // Assuming 30% tax slab
 
     document.getElementById('totalPremium').textContent = totalPremiumPaid.toLocaleString();
     document.getElementById('maturityValue').textContent = maturityValue.toLocaleString();
